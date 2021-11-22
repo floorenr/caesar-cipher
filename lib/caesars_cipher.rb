@@ -1,3 +1,35 @@
+def cipher_calculation(shift_direction, shift_number, input_string)
+  converted_string_array = []
+  # left shift calculation
+  if shift_direction == 'l'
+    input_string.split('').each do |char|
+      converted_string_array << if char.ord >= 97 && char.ord <= 122
+                                  if (char.ord - shift_number) < 97
+                                    (char.ord - shift_number + 26).chr
+                                  else (char.ord - shift_number).chr
+                                  end
+                                elsif (char.ord - shift_number) < 65
+                                  (char.ord - shift_number + 26).chr
+                                else (char.ord - shift_number).chr
+                                end
+    end
+  # right shift calculation
+  else input_string.split('').each do |char|
+         converted_string_array << if char.ord >= 97 && char.ord <= 122
+                                     if (char.ord + shift_number) > 122
+                                       (char.ord + shift_number - 26).chr
+                                     else (char.ord + shift_number).chr
+                                     end
+                                   elsif (char.ord + shift_number) > 90
+                                     (char.ord + shift_number - 26).chr
+                                   else (char.ord + shift_number).chr
+                                   end
+       end
+  end
+
+  converted_string = converted_string_array.join
+end
+
 puts 'Enter your phrase to convert'
 input_string = gets.chomp
 until input_string.chars.all? { |char| ('a'..'z').include? char.downcase }
@@ -19,35 +51,11 @@ until shift_number > -1 && shift_number < 26
   shift_number = gets.chomp.to_i
 end
 
-converted_string_array = []
+puts "Your converted phrase: #{cipher_calculation(shift_direction, shift_number,input_string)}"
 
-# left shift calculation
-if shift_direction == 'l'
-  input_string.split('').each do |char|
-    converted_string_array << if char.ord >= 97 && char.ord <= 122
-                                if (char.ord - shift_number) < 97
-                                  (char.ord - shift_number + 26).chr
-                                else (char.ord - shift_number).chr
-                                end
-                              elsif (char.ord - shift_number) < 65
-                                (char.ord - shift_number + 26).chr
-                              else (char.ord - shift_number).chr
-                              end
-  end
-# right shift calculation
-else input_string.split('').each do |char|
-       converted_string_array << if char.ord >= 97 && char.ord <= 122
-                                   if (char.ord + shift_number) > 122
-                                     (char.ord + shift_number - 26).chr
-                                   else (char.ord + shift_number).chr
-                                   end
-                                 elsif (char.ord + shift_number) > 90
-                                   (char.ord + shift_number - 26).chr
-                                 else (char.ord + shift_number).chr
-                                 end
-     end
-end
 
-converted_string = converted_string_array.join
 
-puts "Your converted phrase: #{converted_string}"
+
+
+
+
